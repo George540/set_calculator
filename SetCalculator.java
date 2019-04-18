@@ -1,8 +1,6 @@
 package Labs;
 
-import java.util.Scanner;
-import java.util.Arrays;
-
+import java.util.*;
 // Set Calculator 1.0: Made by George Mavroeidis on Sunday December 23rd 2018
 // In this program, fundamental concepts of set theory are implemented on two sets of integer elements. 
 // The program asks for user for the length or cardinality of the two sets and then, the user prompts each element to the set individually.
@@ -24,28 +22,73 @@ public class SetCalculator {
 		do {
 			welcomeBanner();
 			System.out.println();
-			
+			int a_length = 0;
+			boolean done1 = false;
 			// User enters the length of sets A and B and are stored
-			System.out.print("Enter the length for set A: ");
-			int a_length = keyboard.nextInt();
-			int[] a = new int[a_length];
+			do {
+				try {
+					System.out.print("Enter the length for set A: ");
+					a_length = keyboard.nextInt();
+					if (a_length < 0)
+						throw new ArithmeticException();
+					done1 = true;
+				} catch(InputMismatchException e) {
+					System.out.println();
+					System.out.println("Must be an integer value");
+					keyboard.nextLine();
+				} catch(ArithmeticException e) {
+					System.out.println();
+					System.out.println("Length of set must be positive");
+					keyboard.nextLine();
+				}
+			} while (done1 == false);
 			
-			System.out.print("Enter the length for set B: ");
-			int b_length = keyboard.nextInt();
+			int[] a = new int[a_length];
+			System.out.println();
+			
+			int b_length = 0;
+			boolean done2 = false;
+			do {
+				try {
+					System.out.print("Enter the length for set B: ");
+					b_length = keyboard.nextInt();
+					if (b_length < 0)
+						throw new ArithmeticException();
+					done2 = true;
+				} catch(InputMismatchException e) {
+					System.out.println();
+					System.out.println("Must be an integer value");
+					keyboard.nextLine();
+				} catch(ArithmeticException e) {
+					System.out.println();
+					System.out.println("Length of set must be positive");
+					keyboard.nextLine();
+				}
+			} while (done2 == false);
+			
 			int[] b = new int[b_length];
 			
 			// User enters each element for each set
 			System.out.println();
 			System.out.println("-------------------");
-			System.out.println("Elements in set A: ");
+			System.out.println("Enter " + a_length + " elements in set A: ");
 			System.out.println();
 			
 			// stores element temporarily
 			int a_elem = 0;
 			for (int i = 0; i < a_length; i++) {
-				System.out.print("- Enter element " + (i+1) + ": ");
-				a_elem = keyboard.nextInt();
-				a[i] = a_elem;
+				boolean done3 = false;
+				do {
+					try {
+						System.out.print("- Enter element " + (i+1) + ": ");
+						a_elem = keyboard.nextInt();
+						a[i] = a_elem;
+						done3 = true;
+					} catch (InputMismatchException e) {
+						System.out.println("Must be an integer value");
+						keyboard.nextLine();
+					}
+				} while (done3 == false);
 			}
 			
 			// Every array is sorted
@@ -54,14 +97,23 @@ public class SetCalculator {
 			System.out.println("Set A contains: " + printSet(a,a_length));
 			
 			System.out.println();
-			System.out.println("Elements in set B: ");
+			System.out.println("Enter " + b_length + " elements in set B: ");
 			System.out.println();
 			
 			int b_elem = 0;
 			for (int i = 0; i < b_length; i++) {
-				System.out.print("- Enter element " + (i+1) + ": ");
-				b_elem = keyboard.nextInt();
-				b[i] = b_elem;
+				boolean done4 = false;
+				do {
+					try {
+						System.out.print("- Enter element " + (i+1) + ": ");
+						b_elem = keyboard.nextInt();
+						b[i] = b_elem;
+						done4 = true;
+					} catch (InputMismatchException e) {
+						System.out.println("Must be an integer value");
+						keyboard.nextLine();
+					}
+				} while (done4 == false);
 			}
 			
 			Arrays.sort(b);
@@ -148,8 +200,8 @@ public class SetCalculator {
 			int[] a_b= new int[a_length-count_inter];
 			for (int i = 0; i < a_length; i++) {
 				int same = 0;
-				for (int j = 0; j < count_inter; j++) {
-					if (a[i] == intersection[j])
+				for (int j = 0; j < b_length; j++) {
+					if (a[i] == b[j])
 						same++;
 				}
 				// A - B is a set that contains only elements that belong to A. Intersection elements are not included
