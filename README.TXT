@@ -1,4 +1,3 @@
 Repository made by George Mavroeidis
--m "first commit"
-Set Calculator
+Set Calculator v 1.1
 Date: December 23 2018
